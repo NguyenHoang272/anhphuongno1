@@ -1,0 +1,101 @@
+<div class="main-content">
+    <div class="main-content__header">
+        <ul class="main-content__header-group">
+            <li class="header-group__item activated">
+                <span>Tất cả</span>
+            </li>
+            <li class="header-group__item">
+                <span>Chờ thanh toán</span>
+            </li>
+            <li class="header-group__item">
+                <span>Vận chuyển</span>
+            </li>
+            <li class="header-group__item">
+                <span>Đang giao</span>
+            </li>
+            <li class="header-group__item">
+                <span>Hoàn thành</span>
+            </li>
+            <li class="header-group__item">
+                <span>Đã hủy</span>
+            </li>
+        </ul>
+    </div>
+    <div class="main-content__body">
+        <ul class="main-content__body-group-product">
+            <li *ngFor="let x of productOrderList, let i = index" class="body-group-product__item">
+                <div class="item-header__top">
+                    <span>Ngày tạo giỏ hàng: {{x.orderDate | date: 'dd/MM/yyyy'}}</span>
+                    <span>Hoàn thành</span>
+                </div> 
+                <ul class="body-group-product__item-list">
+                    <li *ngFor="let y of productOrderList[i].productOrderDetailSet" class="item-list__element">
+                        <div class="body-group-product__item-header">
+                            <div class="item-header__bottom">
+                                <img src="{{y.product.imgUrlProductList[0].url}}" alt="Ảnh đàn" 
+                                class="item-header__bottom-img">
+                                <div class="item-header__bottom-detail">
+                                    <span class="bottom-detail__title">{{y.product.name}}</span>
+                                    <span class="bottom-detail__category">Thể loại: {{y.product.category.name}}</span>
+                                    <span class="bottom-detail__quantity">Số lượng: {{y.quantity}}</span>
+                                </div>
+                                <div class="item-header__bottom-price">
+                                    <span>Đơn giá: {{y.product.price | currency:'VND'}}</span>
+                                </div>
+                            </div>            
+                        </div>
+                    </li>
+                </ul>
+                <div class="body-group-product__item-body">
+                    <div class="item-body__top">
+                        <span>
+                            <ion-icon name="shield-checkmark-outline"></ion-icon>
+                            Thành tiền:
+                        </span>
+                        <span>
+                            {{x.totalMoney | currency:'VND'}}
+                        </span>
+                    </div>
+                    <div class="item-body__bottom">
+                        <span>Không nhận được đánh giá</span>
+                        <button class="btn btn--primary">Mua lại</button>
+                        <button class="btn">Liên hệ người bán</button>
+                    </div>
+                </div>
+            </li>
+        </ul>            
+    </div>
+</div>     
+<ul class="pagination user-information__pagination">
+    <li class="pagination-item">
+      <a 
+      [ngClass]="currentPage == 0 ? 'pagination-item__link--not-clickable' : ''"
+      (click)="previousPage()" 
+      class="pagination-item__link">
+        <ion-icon
+          class="pagination-item__link-icon "
+          name="chevron-back-outline"
+        ></ion-icon>
+      </a>
+    </li>
+    <li class="pagination-item"  *ngFor="let x of [].constructor(totalPages), let i = index">
+      <a
+        [ngClass]="currentPage == (i) ? 'pagination-item__link--active' : ''"
+        (click)="toPage(i)"
+        class="pagination-item__link"
+      >
+        {{i + 1}}
+      </a>
+    </li>
+    <li class="pagination-item">
+      <a 
+      [ngClass]="currentPage == (totalPages-1) ? 'pagination-item__link--not-clickable' : ''"
+      (click)="nextPage()" 
+      class="pagination-item__link">
+        <ion-icon
+          class="pagination-item__link-icon"
+          name="chevron-forward-outline"
+        ></ion-icon>
+      </a>
+    </li>
+  </ul>     

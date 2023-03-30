@@ -1,0 +1,89 @@
+/* Footer */
+
+.footer {
+  border-top: 3px solid var(--primary-color);
+  padding-top: 30px;
+}
+
+.footer__heading {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  color: var(--text-color);
+  margin-bottom: 6px;
+}
+
+.footer__list {
+  list-style: none;
+  padding: 0;
+}
+
+.footer__list-item {
+  padding: 12px 0;
+}
+
+.footer__list-item-link {
+  font-size: 1.2rem;
+  color: #666;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.footer__list-item-link:hover {
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+.footer__list.list-contact-icon {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.list-item-link__footer-icon {
+  font-size: 1.8rem;
+  margin-right: 6px;
+}
+
+.footer__download {
+  display: flex;
+}
+
+.footer__download-qr {
+  width: 80px;
+  object-fit: cover;
+  border: 1px solid var(--border-color);
+}
+
+.footer__download-apps {
+  flex: 1;
+  margin-left: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-right: 30px;
+}
+
+.grid__row .footer__text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+}
+
+.download-apps__link-img {
+  height: 21px;
+}
+
+.footer__text {
+  font-size: 1.5rem;
+}
+
+.footer__bottom {
+  margin-top: 30px;
+  padding: 30px 0;
+  background-color: #f5f5f5;
+  text-align: center;
+  min-height: 48px;
+}

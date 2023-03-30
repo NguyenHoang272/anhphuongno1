@@ -1,0 +1,37 @@
+<div class="app__containter">
+    <div class="grid">
+        <div class="grid__row">
+            <div class="grid__column-2">
+                <div class="left-navbar">
+                    <div class="left-navbar__header">
+                        <img class="left-navbar__header-avatar" src="{{userInformation.avatar}}" alt="">
+                        <div class="left-navbar__header-info">
+                            <div class="header-info__email">
+                                <span>{{userInformation.username}}</span>
+                            </div>
+                            <div class="header-info__edit">
+                                <ion-icon name="pencil-outline"></ion-icon>
+                                <span>Sửa hồ sơ</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="left-navbar__body">
+                        <ul class="left-navbar__body-group">
+                            <li [routerLink]="['/user-info/user-info-detail']" class="body-group__item">
+                                <ion-icon name="person-circle-outline"></ion-icon>
+                                <span>Tài khoản của tôi</span>
+                            </li>
+                            <li [routerLink]="['/user-info/history']" class="body-group__item">
+                                <ion-icon name="newspaper-outline"></ion-icon>
+                                <span>Đơn mua</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="grid__column-10">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

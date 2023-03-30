@@ -1,0 +1,108 @@
+
+<div class="app__container">
+    <div class="grid">
+        <div class="grid__row">
+            <div class="grid__column-12">
+                <div class="payment-delivery-info">
+                    <h3 class="payment-delivery-info__heading">
+                        <div class="payment-delivery-info__heading-icon">
+                            <ion-icon name="location-outline"></ion-icon>
+                        </div>
+                        <span>Địa chỉ nhận hàng</span>
+                    </h3>
+                    <div class="payment-delivery-info__personal-information">
+                        <div class="personal-information__name">
+                        {{fullName}}       
+                        </div>
+                        <div class="personal-information__phone-number">
+                        {{phoneNumber}}
+                        </div>
+                        <div class="personal-information__address">
+                        {{fullAddress}}
+                        </div>
+                    </div>
+                </div>
+                <div class="payment-product-list">
+                    <div class="payment-product-list__header">
+                        <h3 class="payment-product-list__header-heading">
+                            Sản phẩm
+                        </h3>
+                        <div class="payment-product-list__header-detail">
+                            <div class="header-detail__price">
+                                Đơn giá
+                            </div>
+                            <div class="header-detail__quantity">
+                                Số lượng
+                            </div>
+                            <div class="header-detail__total-money">
+                                Thành tiền
+                            </div>
+                        </div>
+                    </div>
+                    <div class="payment-product-list__item" *ngFor="let x of productOrderDetailList">
+                        <div class="payment-product-list__item-information">
+                            <img src="{{x.product.imgUrlProductList[0].url}}" alt="" class="item-information__img">
+                            <div class="item-information__name">
+                                {{x.product.name}}        
+                            </div>
+                            <div class="item-information__category">
+                                Loại: {{x.product.category.name}}        
+                            </div>
+                        </div>
+                        <div class="payment-product-list__item-money-calculate">
+                            <div class="item-money-calculate__price">
+                                {{x.product.price | currency:'VND'}} 
+                            </div>
+                            <div class="item-money-calculate__quantity">
+                                {{x.quantity}}
+                            </div>
+                            <div class="item-money-calculate__total-money">
+                                {{x.product.price * x.quantity | currency:'VND'}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="payment_method">
+                    <div class="payment_method__header">
+                        <h3 class="payment_method__header-heading">
+                            Phương thức thanh toán
+                        </h3>
+                        <button [routerLink]="['method']" class="btn btn--size-s paypal-method chosen">
+                            <i class="fa-brands fa-paypal"></i>
+                            Paypal
+                        </button>
+                        <button class="btn btn--size-s mastercard-method">
+                            <i class="fa-brands fa-cc-mastercard"></i>
+                            MasterCard
+                        </button>
+                        <button class="btn btn--size-s visa-method">
+                            <i class="fa-brands fa-cc-visa"></i>
+                            Visa
+                        </button>
+                        <button class="btn btn--size-s pod-method">
+                            <i class="fa-solid fa-truck"></i>
+                            Thanh toán khi nhận hàng
+                        </button>
+                    </div>
+                    <div class="payment_method__body">
+                        <div class="payment_method__body-router">
+                            <router-outlet></router-outlet>
+                        </div>
+                        <div class="payment_method__body-detail">
+                            <span class="body-detail__total-cart-money">Tổng tiền hàng: {{totalMoney | currency:'VND'}}</span>
+                            <span class="body-detail__total-ship-money">Phí vận chuyển: 0đ</span>
+                            <span class="body-detail__total-money">
+                                Tổng tiền: <span>{{totalMoney | currency:'VND'}}</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="payment_method__footer">
+                        <span class="payment_method__footer-msg">Nhấn thanh toán đồng nghĩa với việc bạn đồng ý tuân theo điều
+                            khoản của chúng tôi.
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

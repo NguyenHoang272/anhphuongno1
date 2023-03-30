@@ -1,0 +1,86 @@
+
+<div class="app__container">
+  <div class="grid">
+    <div class="grid__row app_content">
+      <div *ngIf="productOrderDetailList.length === 0" class="grid__column-12 empty-shopping-cart">
+        <img src="/assets/img/others/empty-shopping-cart.jpg" alt="Ảnh cart trống" class="empty-shopping-cart-img">
+      </div>
+      <div *ngIf="productOrderDetailList.length !== 0" class="grid__column-9">
+        <div class="main-cart">
+          <table class="cart-table">
+            <thead class="cart-table__thead">
+              <th>Sản phẩm</th>
+              <th>Giá</th>
+              <th>Số lượng</th>
+              <th>Tổng cộng</th>
+            </thead>
+            <tbody>
+              <button hidden (click)="getProductOrder()" id="reloadCartId"></button>
+              <tr *ngFor="let x of productOrderDetailList, let i = index">
+                  <td class="cart-table__product">
+                    <div (click)="removeFormCart(x.id)" class="cart-table__product-remove">
+                      <ion-icon name="close-circle-outline"></ion-icon>
+                    </div>
+                    <img
+                      class="cart-table__product-img"
+                      src="{{x.product.imgUrlProductList[0].url}}"
+                      alt="Ảnh guitar"
+                    />
+                    <div class="cart-table__product-name">
+                      {{x.product.name}}
+                    </div>
+                  </td>
+                  <td id="productOrderDetailPrice{{x.id}}" attr.data-price="{{x.product.price}}" class="cart-table__price">{{x.product.price | currency:'VND'}}</td>
+                  <td class="cart-table__quantity">
+                    <ion-icon
+                      (click)="calculateMoney(x.id, '2')"
+                      class="cart-table__quantity-icon"
+                      name="remove-outline"
+                    ></ion-icon>
+                    <span id="productOrderDetailQuantity{{x.id}}">{{x.quantity}}</span>
+                    <ion-icon
+                    (click)="calculateMoney(x.id, '1')"
+                      class="cart-table__quantity-icon"
+                      name="add-outline"
+                    ></ion-icon>
+                  </td>
+                  <td id="productOrderDetailTotalMoney{{x.id}}"
+                  class="cart-table__total">{{x.product.price * x.quantity}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="main-cart__promoting">
+            <input
+              type="text"
+              class="coupon-code-input"
+              placeholder="Nhập mã giảm giá..."
+            />
+            <button class="btn btn--primary">Áp dụng</button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="productOrderDetailList.length !== 0" class="grid__column-3">
+        <div class="cart-infomartion">
+          <table class="cart-information-table">
+            <thead class="cart-information-table__thead">
+                <th colspan="2">Thông tin đơn hàng</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="body-title">Tạm tính</td>
+                <td class="body-money">{{estimatedMoney | currency:'VND'}}</td>
+              </tr>
+              <tr>
+                <td class="body-title">Thành tiền</td>
+                <td class="body-money">{{estimatedMoney | currency:'VND'}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="checkout">
+            <button (click)="payment(userId)" class="btn btn--primary">Thanh toán</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

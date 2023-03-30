@@ -1,0 +1,179 @@
+<div class="app__container">
+  <div class="grid">
+    <div class="grid__row first">
+      <div class="grid__column-12">
+        <div class="product-detail">
+          <div class="product-detail__main">
+            <div class="product-detail__main-img-list">
+              <div class="main-img-list__header">
+                <img src="{{mainPictureUrl}}" alt="Ảnh nhạc cụ"
+                     class="main-img-list__header-main">
+              </div>
+              <div class="main-img-list__body">
+                <img
+                  *ngFor="let x of productListImgShown, let i = index"
+                  (mouseenter)="changeMainPicture(i)"
+                  src="{{x}}" alt="Ảnh nhạc cụ"
+                  class="main-img-list__body-item">
+              </div>
+              <div class="main-img-list__footer">
+                <div class="main-img-list__footer-like">
+                  <span>Chia sẻ:</span>
+                  <ion-icon class="footer-like__facebook" name="logo-facebook"></ion-icon>
+                  <ion-icon class="footer-like__pinterest" name="logo-pinterest"></ion-icon>
+                  <ion-icon class="footer-like__twitter" name="logo-twitter"></ion-icon>
+                </div>
+                <div class="main-img-list__footer-share">
+                  <ion-icon name="heart-outline"></ion-icon>
+                  <span>Đã thích (767)</span>
+                </div>
+              </div>
+            </div>
+            <div class="product-detail__main-overview">
+              <div class="main-overview__header">
+                <div class="main-overview__header-title">
+                  <h3 class="header-title__name">
+                                        <span class="header-title__liked">
+                                            Yêu thích
+                                        </span>
+                    {{currentProduct.name}}
+                  </h3>
+                </div>
+                <div class="main-overview__header-rating">
+                  <div class="header-rating__star">
+                    <div class="header-rating__star-point">
+                      3.8
+                    </div>
+                    <div class="header-rating__star-logo-group">
+                      <ion-icon class="star-logo-group__filled" name="star"></ion-icon>
+                      <ion-icon class="star-logo-group__filled" name="star"></ion-icon>
+                      <ion-icon class="star-logo-group__filled" name="star"></ion-icon>
+                      <ion-icon class="star-logo-group__filled" name="star"></ion-icon>
+                      <ion-icon name="star"></ion-icon>
+                    </div>
+                  </div>
+                  <div class="header-rating__time">
+                    <span>1,7k</span>
+                    <span>Đánh giá</span>
+                  </div>
+                  <div class="header-rating__sold">
+                    <span>4,7k</span>
+                    <span>Đã bán</span>
+                  </div>
+                </div>
+              </div>
+              <div class="main-overview__body">
+                <div class="main-overview__body-discount">
+                  <span class="body-discount__title">Mã giảm giá của shop</span>
+                  <div class="body-discount__stamp">
+                    <div class="body-discount__stamp-item">
+                      Giảm 5k
+                    </div>
+                    <div class="body-discount__stamp-item">
+                      Giảm 15k
+                    </div>
+                  </div>
+                </div>
+
+                <div class="main-overview__body-shipment">
+                  <span class="body-shipment__title">Vận chuyển</span>
+                  <div class="body-shipment__detail">
+                    <div class="body-shipment__detail-icon">
+                      <ion-icon name="airplane-outline"></ion-icon>
+                    </div>
+                    <div class="body-shipment__detail-information">
+                      <div class="detail-information__destination">
+                        <div class="detail-information__destination-title">Vận chuyển tới</div>
+                        <div class="detail-information__destination-place">
+                          <span>Phường khuê mỹ, Ngũ hành sơn, Đà nẵng</span>
+                          <ion-icon name="chevron-down-outline"></ion-icon>
+                        </div>
+                      </div>
+                      <div class="detail-information__ship-cost">
+                        <div class="detail-information__ship-cost-title">Phí vận chuyển</div>
+                        <div class="detail-information__ship-cost-money">0</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="main-overview__body-color">
+                  <span class="body-color__title">Màu</span>
+                  <div class="body-color_group">
+                    <button class="btn">Đen</button>
+                    <button class="btn">Trắng</button>
+                    <button class="btn">Đỏ</button>
+                  </div>
+                </div>
+
+                <div class="main-overview__body-price">
+                  <span class="body-price__title">Giá</span>
+                  <span class="body-color__content">{{currentProduct.price | currency:'VND'}}</span>
+                </div>
+
+                <div class="main-overview__body-quantity">
+                  <span class="body-quantity__title">Số lượng</span>
+                  <div class="body-quantity__group">
+                    <div class="body-quantity__group-setup">
+                      <ion-icon (click)="removeProductQuantity()" class="group-setup__icon"
+                                name="remove-outline"></ion-icon>
+                      <span class="group-setup__number">{{productQuantity}}</span>
+                      <ion-icon (click)="addProductQuantity()" class="group-setup__icon" name="add-outline"></ion-icon>
+                    </div>
+                    <div class="body-quantity__group-storage">
+                      <span>{{currentProduct.quantity}} sản phẩm có sẵn</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="main-overview__body-action">
+                  <button (click)="addProductToCart(currentProduct.id)" class="btn body-action__button">
+                    <span>Thêm vào giỏ hàng</span>
+                    <ion-icon name="cart-outline"></ion-icon>
+                  </button>
+                  <button class="btn body-action__buy-now">Mua ngay</button>
+                </div>
+              </div>
+              <div class="main-overview__footer">
+                <div class="main-overview__footer-guarantee">
+                  <ion-icon name="shield-checkmark-outline"></ion-icon>
+                  <span>Hudagon Music đảm bảo</span>
+                </div>
+                <span class="main-overview__footer-detail">3 ngày trả hàng / Hoàn tiền</span>
+              </div>
+            </div>
+          </div>
+          <div class="product-detail__secondary">
+            <div class="product-detail__secondary-description">
+              <div class="secondary-description__header">
+                <h3 class="secondary-description__header-heading">
+                  MÔ TẢ SẢN PHẨM
+                </h3>
+              </div>
+              <div class="secondary-description__body">
+                <div class="secondary-description__body-content">
+                  {{currentProduct.description}}
+                </div>
+              </div>
+            </div>
+            <div class="product-detail__secondary-detail">
+              <div class="secondary-detail__header">
+                <h3 class="secondary-detail__header-heading">
+                  CHI TIẾT SẢN PHẨM
+                </h3>
+              </div>
+              <div class="secondary-detail__body">
+                <ul class="secondary-detail__body-list">
+                  <li *ngFor="let x of productDetailInfoList" class="body-list__item">
+                    <div class="body-list__item-title">{{x.title}}</div>
+                    <div class="body-list__item-content">{{x.content}}</div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

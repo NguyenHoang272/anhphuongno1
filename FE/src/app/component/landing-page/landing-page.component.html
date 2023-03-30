@@ -1,0 +1,268 @@
+
+<div class="app__container">
+  <div class="grid">
+    <div class="grid__row app_content">
+      <form [formGroup]="rfSearch" (change)="searchProduct()" class="grid__column-2">
+        <nav class="category">
+          <h3 class="category__heading">
+            <span>Danh mục sản phẩm</span> 
+          </h3>
+
+          <ul class="category__list">
+            <li class="category__list-item">
+              <a 
+              [ngClass]="categoryId == -1 ? 'category__list-item--active' : ''" 
+              (click)="updateCategoryId(-1)" class="list-item__link">Tất cả</a>
+            </li>
+            <li *ngFor="let x of categoryList" class="category__list-item" >
+              <a 
+              [ngClass]="categoryId == x.id ? 'category__list-item--active' : ''" 
+              (click)="updateCategoryId(x.id)" 
+              class="list-item__link">{{x.name}}</a>
+            </li>
+          </ul>
+        </nav>
+
+        <nav class="search-detail">
+          <h3 class="search-detail__heading">
+            <span>Mức giá</span> 
+          </h3>
+
+          <ul class="search-detail__price">
+
+            <li class="search-detail__price-item">
+              <span>Tất cả</span>
+              <input type="radio" value="0-9999999999999999999" formControlName="priceRange"> 
+            </li>
+
+            <li class="search-detail__price-item">
+              <span>Dưới 5 triệu</span>
+              <input type="radio" value="0-5000000" formControlName="priceRange"> 
+            </li>
+
+            <li class="search-detail__price-item">
+                <span>Từ 5 - 10 triệu</span>
+                <input type="radio" value="5000000-10000000" formControlName="priceRange"> 
+            </li>
+
+            <li class="search-detail__price-item">
+              <span>Từ 10 - 20 triệu</span>
+              <input type="radio" value="10000000-20000000" formControlName="priceRange"> 
+            </li>
+
+            <li class="search-detail__price-item">
+              <span>Từ 20 - 50 triệu</span>
+              <input type="radio" value="20000000-50000000" formControlName="priceRange"> 
+            </li>
+
+            <li class="search-detail__price-item">
+              <span>Trên 50 triệu</span>
+              <input type="radio" value="50000000-99999999999999999999" formControlName="priceRange"> 
+            </li>
+            
+          </ul>
+
+        </nav>
+      </form>
+
+      <div class="grid__column-10">
+        <div class="home-filter">
+          <span class="home-filter__title">Sắp xếp theo</span>
+          <button class="home-filter__btn btn">Phổ biến</button>
+          <button class="home-filter__btn btn btn--primary">Mới nhất</button>
+          <button class="home-filter__btn btn">Bán chạy</button>
+
+          <button (click)="searchProduct()" id="search-multiple" hidden>search</button>
+
+          <div class="select_input home-filter__select">
+            <span class="select_input__label">Giá</span>
+            <ion-icon
+              class="select_input__down-icon"
+              name="chevron-down-outline"
+            ></ion-icon>
+
+            <ul class="select-input__list">
+              <li class="select-input__item">
+                <a (click)="sortByPrice('')" class="select-input__link">Mặc định</a>
+              </li>
+              <li class="select-input__item">
+                <a (click)="sortByPrice('asc')" class="select-input__link">Giá thấp đến cao</a>
+              </li>
+              <li class="select-input__item">
+                <a (click)="sortByPrice('desc')" class="select-input__link">Giá cao đến thấp</a>
+              </li>
+            </ul>
+          </div>
+
+          <div *ngIf="productHomeShowListLength !== 0" class="home-filter__paginate">
+            <span class="home-filter__paginate-num">
+              <div class="paginate-num__current">{{currentPage + 1}}</div>
+              /{{totalPages}}
+            </span>
+
+            <div class="home-filter__paginate-page-control">
+              <a
+                (click)="previousPage()"
+                [ngClass]="currentPage == 0 ? 'paginate-page-control-btn--disabled' : ''"
+                class="paginate-page-control-btn"
+              >
+                <ion-icon
+                  class="select-price__icon"
+                  name="chevron-back-outline"
+                ></ion-icon>
+              </a>
+              <a 
+                (click)="nextPage()" 
+                [ngClass]="currentPage == totalPages - 1 ? 'paginate-page-control-btn--disabled' : ''"
+                class="paginate-page-control-btn">
+                <ion-icon
+                  class="select-price__icon"
+                  name="chevron-forward-outline"
+                ></ion-icon>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="productHomeShowListLength !== 0" class="home-product">
+          <div class="grid__row">
+            <div class="grid__column-2-4" *ngFor="let x of productHomeShowList, let i = index">
+              <!-- Product item -->
+              <div class="home-product-item" href="#">
+                <!-- Product item action -->
+                <div class="home-product-item__interact">
+                  <button [routerLink]="['/product-detail',x.id]" class="btn btn--size-s">Xem chi tiết</button>
+                  <button *ngIf="isLogged" class="btn btn--size-s home-product-item__interact-adding">Thêm vào giỏ hàng
+                    <div class="interact-adding__detail">
+                      <h3>Số lượng</h3>
+                      <td class="interact-adding__detail-quantity">
+                        <ion-icon
+                          (click)="removeProductQuantity()"
+                          class="detail-quantity__icon"
+                          name="remove-outline"
+                        ></ion-icon>
+                        <span>{{productQuantity}}</span>
+                        <ion-icon
+                          (click)="addProductQuantity()"
+                          class="detail-quantity__icon"
+                          name="add-outline"
+                        ></ion-icon>
+                      </td>
+                      <button (click)="addProductToCart(x.id)" class="btn btn-primary btn--size-s interact-adding__detail-button">Thêm</button>
+                    </div>
+                  </button>
+                  <button (click)="popUpMess('2','Yêu cầu đăng nhập')" 
+                  *ngIf="!isLogged" class="btn btn--size-s">Thêm vào giỏ hàng</button>
+                </div>
+
+                <div
+                  class="home-product-item__img"
+                  style="
+                    background-image: url({{x.homeImgCart}});
+                  "
+                ></div>
+
+                <h4 class="home-product-item__name">
+                  {{x.name}}
+                </h4>
+
+                <div class="home-product-item__price">
+                  <div class="home-product-item__price-current">{{x.price | currency:'VND'}}</div>
+                </div>
+
+                <div class="home-product-item__action">
+                  <span class="item__action-like item__action-like-liked">
+                    <ion-icon
+                      class="action-like__empty"
+                      name="heart-outline"
+                    ></ion-icon>
+                    <ion-icon
+                      class="action-like__filled"
+                      name="heart"
+                    ></ion-icon>
+                  </span>
+
+                  <div class="item__action-rating">
+                    <ion-icon
+                      class="action-rating__star-gold"
+                      name="star"
+                    ></ion-icon>
+                    <ion-icon
+                      class="action-rating__star-gold"
+                      name="star"
+                    ></ion-icon>
+                    <ion-icon
+                      class="action-rating__star-gold"
+                      name="star"
+                    ></ion-icon>
+                    <ion-icon
+                      class="action-rating__star-gold"
+                      name="star"
+                    ></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                  </div>
+
+                  <span class="home-product-item__action-sold">Còn 88 sản phẩm</span>
+                </div>
+
+                <div class="home-product-item__overview">
+                  <span class="item__origin-brand">{{x.brand}}</span>
+                  <span class="item__origin-country">{{x.category}}</span>
+                </div>
+
+                <div class="home-product-item__favourite">
+                  <i class="fa-solid fa-check"></i>
+                  <span>Yêu thích</span>
+                </div>
+
+                <div class="home-product-item__sale-off">
+                  <span class="sale-off__sale-off-percent">10%</span>
+                  <span class="sale-off__sale-off-label">GIẢM</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ul *ngIf="productHomeShowListLength !== 0" class="pagination home-product__pagination">
+          <li class="pagination-item">
+            <a 
+            [ngClass]="currentPage == 0 ? 'pagination-item__link--not-clickable' : ''"
+            (click)="previousPage()" 
+            class="pagination-item__link">
+              <ion-icon
+                class="pagination-item__link-icon "
+                name="chevron-back-outline"
+              ></ion-icon>
+            </a>
+          </li>
+          <li class="pagination-item"  *ngFor="let x of [].constructor(totalPages), let i = index">
+            <a
+              [ngClass]="currentPage == (i) ? 'pagination-item__link--active' : ''"
+              (click)="toPage(i)"
+              class="pagination-item__link"
+            >
+              {{i + 1}}
+            </a>
+          </li>
+          <li class="pagination-item">
+            <a 
+            [ngClass]="currentPage == (totalPages-1) ? 'pagination-item__link--not-clickable' : ''"
+            (click)="nextPage()" 
+            class="pagination-item__link">
+              <ion-icon
+                class="pagination-item__link-icon"
+                name="chevron-forward-outline"
+              ></ion-icon>
+            </a>
+          </li>
+        </ul>
+
+        <div *ngIf="productHomeShowListLength === 0" class="empty-shopping-cart">
+          <img src="https://cdn.pixabay.com/photo/2021/07/21/12/49/error-6482984_960_720.png" alt="Ảnh cart trống" class="empty-shopping-cart-img">
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
